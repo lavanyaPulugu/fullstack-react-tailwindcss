@@ -29,7 +29,7 @@ const Signup = () => {
       }
       setLoading(false);
       if (res.ok) {
-        navigate("/sign-in");
+        navigate("/signin");
       }
     } catch (error) {
       setErrorMessage(data.message);
@@ -43,7 +43,7 @@ const Signup = () => {
         <div className="flex-1">
           <Link to="/" className="text-4xl  font-bold dark:text-white">
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-              Sahand's
+              Rahul's
             </span>
             Blog
           </Link>
