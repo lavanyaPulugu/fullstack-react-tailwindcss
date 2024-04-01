@@ -13,6 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { signoutSuccess } from "../redux/user/userSlice";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -41,6 +42,7 @@ const DashSidebar = () => {
       console.log(error.message);
     }
   };
+
   return (
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
