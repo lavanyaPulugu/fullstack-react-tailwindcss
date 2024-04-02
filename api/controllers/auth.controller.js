@@ -39,25 +39,22 @@ export const signup = async (req, res, next) => {
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
 
-  try {
-    if (!email || !password || email.trim() === "" || password.trim() === "") {
-      return next(errorHandler(400, "All fields are required"));
-    }
+  if (!email || !password || email === "" || password === "") {
+    next(errorHandler(400, "All fields are required"));
+  }
 
-    const foundUser = await User.findOne({ email });
-    if (!foundUser) {
+  try {
+    const validUser = await User.findOne({ email });
+    if (!validUser) {
       return next(errorHandler(404, "User not found"));
     }
-
-    const validPassword = bcryptjs.compareSync(password, foundUser.password);
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) {
       return next(errorHandler(400, "Invalid password"));
     }
-
     const token = jwt.sign(
       { id: validUser._id, isAdmin: validUser.isAdmin },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" } // Example: token expires in 1 hour
+      process.env.JWT_SECRET
     );
 
     const { password: pass, ...rest } = validUser._doc;
@@ -66,7 +63,6 @@ export const signin = async (req, res, next) => {
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
-        // other cookie options like secure, sameSite, etc.
       })
       .json(rest);
   } catch (error) {
