@@ -41,26 +41,26 @@ export const signin = async (req, res, next) => {
 
   try {
     if (!email || !password || email.trim() === "" || password.trim() === "") {
-      return next(await errorHandler(400, "All fields are required"));
+      return next(errorHandler(400, "All fields are required"));
     }
 
     const foundUser = await User.findOne({ email });
     if (!foundUser) {
-      return next(await errorHandler(404, "User not found"));
+      return next(errorHandler(404, "User not found"));
     }
 
     const validPassword = bcryptjs.compareSync(password, foundUser.password);
     if (!validPassword) {
-      return next(await errorHandler(400, "Invalid password"));
+      return next(errorHandler(400, "Invalid password"));
     }
 
     const token = jwt.sign(
-      { id: foundUser._id, isAdmin: foundUser.isAdmin },
+      { id: validUser._id, isAdmin: validUser.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: "1h" } // Example: token expires in 1 hour
     );
 
-    const { password: pass, ...rest } = foundUser._doc;
+    const { password: pass, ...rest } = validUser._doc;
 
     res
       .status(200)
