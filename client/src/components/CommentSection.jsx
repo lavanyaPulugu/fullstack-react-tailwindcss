@@ -1,12 +1,11 @@
-import React from "react";
 import { Alert, Button, Modal, TextInput, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import comment from "./comment";
+import Comment from "./Comment";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
-const CommentSection = (postId) => {
+export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState(null);
@@ -14,7 +13,6 @@ const CommentSection = (postId) => {
   const [showModal, setShowModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (comment.length > 200) {
@@ -112,7 +110,6 @@ const CommentSection = (postId) => {
       console.log(error.message);
     }
   };
-
   return (
     <div className="max-w-2xl mx-auto w-full p-3">
       {currentUser ? (
@@ -218,6 +215,4 @@ const CommentSection = (postId) => {
       </Modal>
     </div>
   );
-};
-
-export default CommentSection;
+}

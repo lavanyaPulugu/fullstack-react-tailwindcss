@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Button, Textarea } from "flowbite-react";
-import { set } from "mongoose";
 
-const comment = ({ comment, onLike, onEdit, onDelete }) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
@@ -143,4 +142,4 @@ const comment = ({ comment, onLike, onEdit, onDelete }) => {
   );
 };
 
-export default comment;
+export default Comment;
